@@ -2,14 +2,14 @@
 
 network() {
   echo ''
-  echo '🐳 Creating "cslant_blog" docker network 🌐'
+  echo '🐳 Creating "rental_cms" docker network 🌐'
   cd "$CURRENT_DIR" || exit
 
-  BLOG_NETWORK=cslant_blog
+  RENTAL_NETWORK=rental_cms
 
   echo "◎ Creating network..."
-  if [ -z "$(docker network ls -q -f name=$BLOG_NETWORK)" ]; then
-    docker network create $BLOG_NETWORK
+  if [ -z "$(docker network ls -q -f name=$RENTAL_NETWORK)" ]; then
+    docker network create $RENTAL_NETWORK
   else
     echo "  ∟ Network already exists"
   fi

@@ -1,6 +1,6 @@
 #!/bin/bash
 
-GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:cslant}
+GIT_SSH_URL=${GIT_SSH_URL:-git@github.com:test}
 
 # shellcheck disable=SC2034
 GITHUB_TOKEN=${GIT_TOKEN:-ghp_1234567890}

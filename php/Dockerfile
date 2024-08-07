@@ -1,9 +1,6 @@
 ARG PHP_VERSION=8.3
 
 FROM php:${PHP_VERSION}-fpm-alpine
-LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
-LABEL authors="cslant"
-LABEL description="PHP image for CSlant development - Using for Blog"
 
 ## Make php ini
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
@@ -21,8 +18,8 @@ ENV GROUP_ID=${GROUP_ID}
 
 # ensure www-data user exists
 RUN set -eu; \
-    addgroup -g ${USER_ID} csdev; \
-    adduser -D -u ${USER_ID} -G csdev csdev
+    addgroup -g ${USER_ID} rentaldev; \
+    adduser -D -u ${USER_ID} -G rentaldev rentaldev
 
 ADD blog.php.ini "$PHP_INI_DIR/conf.d/blog.ini"
 ADD blog.pool.conf /usr/local/etc/php-fpm.d/www.conf
@@ -34,6 +31,6 @@ WORKDIR /var/dev
 ADD --chmod=0755 https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 RUN install-php-extensions soap pcntl bcmath gd exif sockets zip xdebug redis intl pdo_pgsql pgsql mysqli
 
-USER csdev
+USER rentaldev
 
 CMD ["php-fpm"]

@@ -1,5 +1,5 @@
 networks:
-  cslant_blog:
+  rental_cms:
     external: true
 
 volumes:
@@ -38,7 +38,7 @@ services:
       - NGINX_HOST_HTTP_PORT=${NGINX_HOST_HTTP_PORT:-80}
       - NGINX_HOST_HTTPS_PORT=${NGINX_HOST_HTTPS_PORT:-443}
     networks:
-      - cslant_blog
+      - rental_cms
     depends_on:
       - php
     healthcheck:
@@ -50,7 +50,6 @@ services:
   ## BACKEND SERVICES
   php:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-php"
-    image: cslant/blog-php
     build:
       context: php
       args:
@@ -60,7 +59,7 @@ services:
         - PHP_VERSION=${PHP_VERSION:-8.3}
         - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
     networks:
-      - cslant_blog
+      - rental_cms
     volumes:
       - ${SOURCE_CODE_PATH}:/var/dev
     environment:
@@ -78,7 +77,6 @@ services:
   ## FRONTEND SERVICES
   node:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-node"
-    image: cslant/blog-node
     build:
       context: node
       args:
@@ -86,7 +84,7 @@ services:
         - USER_ID=${USER_ID:-1000}
         - GROUP_ID=${GROUP_ID:-1000}
     networks:
-      - cslant_blog
+      - rental_cms
     volumes:
       - ${SOURCE_CODE_PATH}:/var/dev
 
@@ -94,7 +92,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME}-fe"
     image: ${COMPOSE_PROJECT_NAME}-node
     networks:
-      - cslant_blog
+      - rental_cms
     volumes:
       - ${SOURCE_CODE_PATH}/blog-fe:/var/dev/blog-fe
     working_dir: "/var/dev/blog-fe"
@@ -108,7 +106,7 @@ services:
       args:
         - TZ=${TZ}
     networks:
-      - cslant_blog
+      - rental_cms
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U ${POSTGRES_USER}" ]
       interval: 10s
@@ -140,7 +138,7 @@ services:
       - "${ELASTICSEARCH_HTTP_PORT:-9200}:9200"
       - "${ELASTICSEARCH_TRANSPORT_PORT:-9300}:9300"
     networks:
-      - cslant_blog
+      - rental_cms
     volumes:
       - elasticsearch:/var/lib/elasticsearch/data
     ulimits:
@@ -155,7 +153,6 @@ services:
 
   worker:
     container_name: "${COMPOSE_PROJECT_NAME}-worker"
-    image: cslant/blog-worker
     build:
       context: worker
       args:
@@ -165,7 +162,7 @@ services:
         - PHP_VERSION=${PHP_VERSION:-8.3}
         - PHP_VERSION_SHORT=${PHP_VERSION_SHORT:-83}
     networks:
-      - cslant_blog
+      - rental_cms
     volumes:
       - ${SOURCE_CODE_PATH}:/var/dev
       - ./worker/supervisor.d:/etc/supervisor.d

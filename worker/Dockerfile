@@ -1,9 +1,6 @@
 ARG PHP_VERSION=8.3
 
 FROM php:${PHP_VERSION}-cli-alpine
-LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
-LABEL authors="cslant"
-LABEL description="PHP Worker image for CSlant development - Using for Blog"
 
 RUN mv "$PHP_INI_DIR/php.ini-development" "$PHP_INI_DIR/php.ini"
 
@@ -13,8 +10,8 @@ ARG GROUP_ID=1000
 ENV GROUP_ID ${GROUP_ID}
 
 RUN set -eu; \
-    addgroup -g ${USER_ID} csdev; \
-    adduser -D -u ${USER_ID} -G csdev csdev
+    addgroup -g ${USER_ID} rentaldev; \
+    adduser -D -u ${USER_ID} -G rentaldev rentaldev
 
 ADD blog.php.ini "$PHP_INI_DIR/conf.d/blog.ini"
 

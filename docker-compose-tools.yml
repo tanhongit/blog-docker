@@ -1,5 +1,5 @@
 networks:
-  cslant_blog:
+  rental_cms:
     external: true
 
 volumes:
@@ -12,7 +12,7 @@ services:
     container_name: "${COMPOSE_PROJECT_NAME:-blog}-pgadmin"
     image: dpage/pgadmin4
     networks:
-      - cslant_blog
+      - rental_cms
     ports:
       - "${PGADMIN_HOST_PORT:-5050}:80"
     environment:
@@ -48,4 +48,4 @@ services:
       timeout: 5s
       retries: 3
     networks:
-      - cslant_blog
+      - rental_cms

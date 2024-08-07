@@ -1,7 +1,4 @@
 FROM node:22.0.0-alpine
-LABEL maintainer="Tan Nguyen <tannp27@gmail.com>"
-LABEL authors="cslant"
-LABEL description="Node.js image for CSlant development - Using for Blog"
 
 ARG USER_ID=1000
 ARG GROUP_ID=1000
@@ -15,10 +12,10 @@ RUN apk add --no-cache git
 RUN deluser node
 
 ## Add user
-RUN addgroup -g ${USER_ID} csdev; \
-    adduser -D -u ${USER_ID} -G csdev csdev
+RUN addgroup -g ${USER_ID} rentaldev; \
+    adduser -D -u ${USER_ID} -G rentaldev rentaldev
 
-USER csdev
+USER rentaldev
 
 RUN echo Y | yarn -v
 
